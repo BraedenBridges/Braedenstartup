@@ -3,91 +3,119 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>YourStartup</title>
-  <meta name="description" content="A student startup prototype for BSAD 281.">
+  <meta name="theme-color" content="#f5f7f4">
+  <meta name="description" content="A friendly class planner that helps you show up, one class at a time.">
+  <title>Show Up — your class companion</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-  <!-- =========================================================
-       HEADER: logo text + navigation.
-       Each link points to a "view" further down the page (#home, #explore, #about).
-       ========================================================= -->
   <header class="site-header">
-    <a class="brand" href="#home" id="brand-name">YourStartup</a>
-    <nav aria-label="Main">
-      <a href="#home">Home</a>
-      <a href="#explore">Explore</a>
-      <a href="#about">About</a>
-    </nav>
+    <a class="brand" href="#home" aria-label="Show Up home">
+      <span class="brand-mark" aria-hidden="true">✳</span>
+      <span>show up</span>
+    </a>
+    <div class="header-actions">
+      <span class="today-date" id="header-date"></span>
+      <button class="button reminder-button" id="reminder-button" type="button">Turn on reminders</button>
+    </div>
   </header>
 
-  <main>
+  <main id="home">
+    <section class="welcome" aria-labelledby="welcome-title">
+      <p class="eyebrow">YOUR CLASS COMPANION</p>
+      <h1 id="welcome-title">A little nudge.<br><span>A big step forward.</span></h1>
+      <p class="welcome-copy">You don’t have to feel ready. Just make it to the next class, and let that be enough.</p>
+    </section>
 
-    <!-- =======================================================
-         VIEW 1: HOME — what you do, for whom, and why it matters.
-         ======================================================= -->
-    <section id="home" data-view>
-      <div class="hero">
-        <p class="eyebrow">Prototype</p>
-        <h1 id="tagline">One sentence that says what your startup does.</h1>
-        <p class="lead" id="pitch">
-          Who is your customer, what problem do they have, and why is your
-          solution better than what they use today?
-        </p>
-        <a class="button" href="#explore">See it in action</a>
+    <section class="next-card" aria-labelledby="next-heading">
+      <div class="next-copy">
+        <p class="eyebrow" id="next-eyebrow">YOUR NEXT CLASS</p>
+        <h2 id="next-heading">Your next class starts here.</h2>
+        <p id="next-detail">Add your classes to get a friendly reminder before you go.</p>
+      </div>
+      <div class="next-action" id="next-action">
+        <button class="button button-light" id="next-class-cta" type="button">Add my first class</button>
+      </div>
+      <span class="sun-shape" aria-hidden="true">✳</span>
+    </section>
+
+    <section class="schedule-section" id="schedule" aria-labelledby="schedule-heading">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">MAKE IT YOURS</p>
+          <h2 id="schedule-heading">Your week</h2>
+        </div>
+        <button class="button add-button" id="add-class-button" type="button">＋ Add a class</button>
       </div>
 
-      <div class="steps">
-        <div class="card">
-          <h2>1. Step one</h2>
-          <p>Describe the first thing a customer does.</p>
+      <p class="storage-notice" id="storage-notice" role="status" hidden></p>
+
+      <form class="class-form card" id="class-form" hidden>
+        <div class="form-heading">
+          <div>
+            <p class="eyebrow">A CLASS TO SHOW UP FOR</p>
+            <h3 id="form-heading">Add a class</h3>
+          </div>
+          <button class="icon-button" id="close-form-button" type="button" aria-label="Close form">×</button>
         </div>
-        <div class="card">
-          <h2>2. Step two</h2>
-          <p>Describe what happens next.</p>
+
+        <div class="form-grid">
+          <label class="field field-wide">
+            <span>Class name</span>
+            <input id="class-name" name="class-name" type="text" maxlength="60" placeholder="e.g. Intro to Psychology" required>
+          </label>
+          <label class="field">
+            <span>Start time</span>
+            <input id="class-time" name="class-time" type="time" required>
+          </label>
+          <label class="field">
+            <span>Room or place <span class="optional">(optional)</span></span>
+            <input id="class-location" name="class-location" type="text" maxlength="60" placeholder="e.g. Room 204">
+          </label>
+          <fieldset class="field field-wide day-field">
+            <legend>What days?</legend>
+            <div class="day-choices" id="day-choices"></div>
+          </fieldset>
+          <label class="field field-wide">
+            <span>Remind me</span>
+            <select id="reminder-lead" name="reminder-lead">
+              <option value="5">5 minutes before</option>
+              <option value="10">10 minutes before</option>
+              <option value="15" selected>15 minutes before</option>
+              <option value="30">30 minutes before</option>
+            </select>
+          </label>
         </div>
-        <div class="card">
-          <h2>3. Step three</h2>
-          <p>Describe the result the customer gets.</p>
+        <p class="form-error" id="form-error" role="alert" hidden></p>
+        <div class="form-actions">
+          <button class="button" type="submit" id="save-class-button">Save class</button>
+          <button class="text-button" type="button" id="cancel-form-button">Cancel</button>
         </div>
+      </form>
+
+      <div class="empty-state card" id="empty-state">
+        <span class="empty-icon" aria-hidden="true">✳</span>
+        <h3>Your week is yours to shape.</h3>
+        <p>Add your class times—even the early ones—and we’ll help you take them one at a time.</p>
+        <button class="button" id="empty-add-button" type="button">Add a class</button>
       </div>
+
+      <div class="week-list" id="week-list"></div>
     </section>
 
-    <!-- =======================================================
-         VIEW 2: EXPLORE — a list built from the fake data in data.js.
-         ======================================================= -->
-    <section id="explore" data-view hidden>
-      <h1>Explore</h1>
-      <p class="muted">These examples are fake. They come from <code>data.js</code>.</p>
-
-      <label class="search">
-        <span>Search</span>
-        <input type="search" id="search-box" placeholder="Type to filter…">
-      </label>
-
-      <p class="muted" id="saved-count"></p>
-      <div class="grid" id="listing-grid"></div>
-      <p class="empty" id="empty-message" hidden>Nothing matches your search.</p>
-    </section>
-
-    <!-- =======================================================
-         VIEW 3: ABOUT — your team and your story.
-         ======================================================= -->
-    <section id="about" data-view hidden>
-      <h1>About us</h1>
-      <p>Tell the story of why your team started this company.</p>
-      <p>Use first names only, or no names at all — this site is public.</p>
-    </section>
-
+    <aside class="pep-talk" aria-label="A little encouragement">
+      <span class="pep-icon" aria-hidden="true">♡</span>
+      <p id="pep-talk-text">Showing up doesn’t have to be perfect. It just has to start.</p>
+      <span class="pep-credit">A note for you</span>
+    </aside>
+    <p class="reminder-note">Reminders work while this page is open. Allow browser notifications for a nudge before class.</p>
+    <p class="sr-only" id="announcement" role="status" aria-live="polite"></p>
   </main>
 
-  <!-- Keep this footer. Your site must say it is a student project. -->
   <footer class="site-footer">
-    <p>Student prototype for BSAD 281 at St. Francis Xavier University. Not a real company — all data is fictional.</p>
+    <p>Show Up is a student project prototype. Your schedule is saved only in this browser.</p>
   </footer>
 
-  <!-- Scripts load in this order: data first, then the code that uses it. -->
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
